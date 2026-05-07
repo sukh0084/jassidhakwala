@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>I'm Sorry, Harmandeep 💙</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@500;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --blue:#3a6bc9;--softblue:#a8c4f0;--navy:#1a2f5a;
+  --petal:#dde9ff;--gold:#c9a84c;--deep:#0d1e3a;
+}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Lato',sans-serif;background:#0d1e3a;-webkit-font-smoothing:antialiased;}
+
+/* SCREENS */
+.screen{
+  position:fixed;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;overflow:hidden;
+  opacity:0;pointer-events:none;
+  transition:opacity .6s ease,transform .6s ease;
+  transform:translateY(26px);z-index:1;
+}
+.screen.active{opacity:1;pointer-events:all;transform:translateY(0);z-index:10;}
+
+/* PARTICLES */
+#particleLayer{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.pf{position:absolute;bottom:-50px;animation:floatUp linear forwards;opacity:0;}
+@keyframes floatUp{0%{transform:translateY(0) rotate(0deg);opacity:.2;}100%{transform:translateY(-110vh) rotate(360deg);opacity:0;}}
+
+/* MUSIC BTN */
+#musicBtn{
+  position:fixed;top:12px;right:14px;z-index:99999;
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,.13);border:2px solid rgba(168,196,240,.4);
+  font-size:1.2rem;cursor:pointer;
+  box-shadow:0 4px 16px rgba(58,107,201,.3);
+  display:flex;align-items:center;justify-content:center;
+  animation:pulse 2.5s ease-in-out infinite;
+}
+#musicBtn.muted{opacity:.4;animation:none;}
+
+/* BOTTOM NAV */
+#nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:999;
+  background:rgba(10,22,45,0.98);
+  border-top:1.5px solid rgba(168,196,240,.2);
+  display:flex;justify-content:space-around;align-items:center;
+  padding:6px 2px 10px;
+  box-shadow:0 -4px 24px rgba(58,107,201,.2);
+}
+.nav-btn{
+  display:flex;flex-direction:column;align-items:center;
+  background:none;border:none;cursor:pointer;
+  font-family:'Dancing Script',cursive;
+  font-size:.58rem;color:rgba(168,196,240,.75);
+  gap:2px;padding:4px 4px;border-radius:12px;
+  transition:background .2s,transform .2s;flex:1;min-width:0;
+}
+.nav-btn .ni{font-size:1.25rem;}
+.nav-btn:active{transform:scale(.88);}
+.nav-btn.on{color:#a8c4f0;background:rgba(58,107,201,.22);font-weight:700;}
+
+/* STARS */
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle 2s ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.15;transform:scale(1);}50%{opacity:1;transform:scale(2);}}
+
+/* ════════════════════
+   HOME
+════════════════════ */
+#s-home{
+  background:linear-gradient(155deg,#0d1e3a,#162848,#0f2040);
+  text-align:center;padding:24px 28px 90px;position:relative;
+}
+#s-home::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,rgba(58,107,201,.18) 0%,transparent 68%);pointer-events:none;}
+.home-inner{position:relative;z-index:20;}
+.h-sorry{font-family:'Dancing Script',cursive;font-size:1.1rem;color:var(--softblue);letter-spacing:2px;margin-bottom:8px;}
+.h-name{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,10vw,4.8rem);color:#fff;line-height:1.05;margin-bottom:6px;}
+.h-name span{color:var(--softblue);font-style:italic;}
+.h-from{font-family:'Dancing Script',cursive;font-size:1rem;color:var(--gold);margin-bottom:18px;}
+.h-icon{font-size:3rem;margin:10px 0;animation:pulse 2s ease-in-out infinite;display:block;}
+.h-tag{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(.88rem,3vw,1.1rem);color:rgba(168,196,240,.9);max-width:340px;line-height:1.8;margin:0 auto 28px;}
+.btn-enter{
+  background:linear-gradient(135deg,#3a6bc9,#1e3f80);
+  color:#fff;border:2px solid rgba(168,196,240,.35);
+  padding:15px 42px;font-family:'Dancing Script',cursive;font-size:1.4rem;
+  border-radius:50px;cursor:pointer;
+  box-shadow:0 8px 30px rgba(58,107,201,.5);
+  animation:glowBlue 2.5s ease-in-out infinite;
+  position:relative;z-index:20;
+  -webkit-tap-highlight-color:rgba(58,107,201,.3);
+  touch-action:manipulation;
+}
+.float-row{font-size:1.7rem;margin-top:22px;letter-spacing:10px;animation:sway 3s ease-in-out infinite;}
+
+/* ════════════════════
+   SORRY
+════════════════════ */
+#s-sorry{
+  background:linear-gradient(145deg,#060f1e,#0f2040,#162850);
+  text-align:center;padding:20px 24px 90px;position:relative;overflow:hidden;
+}
+#s-sorry::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,rgba(58,107,201,.2) 0%,transparent 68%);pointer-events:none;}
+.sorry-inner{position:relative;z-index:2;max-width:420px;width:100%;}
+.big-sorry{font-size:4.5rem;display:block;margin-bottom:10px;animation:heartbeat .95s ease-in-out infinite;}
+.sorry-title{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,5.5vw,2.3rem);color:#fff;line-height:1.3;margin-bottom:10px;}
+.sorry-title span{color:var(--softblue);font-style:italic;}
+.sorry-text{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(.8rem,2.7vw,.96rem);color:rgba(168,196,240,.88);line-height:1.95;margin-bottom:26px;}
+.forgive-q{font-family:'Dancing Script',cursive;font-size:clamp(1.1rem,4.2vw,1.45rem);color:var(--softblue);margin-bottom:22px;display:block;}
+
+.btn-arena{position:relative;width:min(340px,88vw);height:120px;margin:0 auto;}
+.btn-forgive{
+  position:absolute;left:0;top:50%;transform:translateY(-50%);
+  background:linear-gradient(135deg,#3a6bc9,#2a55a8);
+  color:#fff;border:none;padding:14px 24px;
+  font-family:'Dancing Script',cursive;font-size:1.25rem;
+  border-radius:50px;cursor:pointer;
+  box-shadow:0 8px 28px rgba(58,107,201,.55);
+  animation:glowBlue 2s ease-in-out infinite;
+  z-index:3;white-space:nowrap;
+  touch-action:manipulation;
+}
+.btn-notyet{
+  position:absolute;right:0;top:50%;transform:translateY(-50%);
+  background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);
+  border:1.5px solid rgba(255,255,255,.2);padding:12px 18px;
+  font-family:'Dancing Script',cursive;font-size:1.1rem;
+  border-radius:50px;cursor:pointer;
+  transition:left .22s cubic-bezier(.25,.46,.45,.94),top .22s cubic-bezier(.25,.46,.45,.94),opacity .3s,transform .3s;
+  z-index:3;white-space:nowrap;
+  touch-action:manipulation;
+}
+
+#forgivenMsg{display:none;margin-top:6px;animation:fadeIn .8s ease;}
+.forg-icon{font-size:3.2rem;animation:pulse 1.4s ease-in-out infinite;display:block;margin-bottom:8px;}
+.forg-line{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.4rem,5vw,2rem);color:var(--softblue);margin-bottom:8px;}
+.forg-sub{font-family:'Dancing Script',cursive;font-size:clamp(1rem,3.5vw,1.2rem);color:rgba(255,255,255,.85);line-height:1.85;}
+.forg-conf{font-size:1.5rem;letter-spacing:6px;margin-top:12px;}
+
+/* ════════════════════
+   REGRETS
+════════════════════ */
+#s-reasons{
+  background:linear-gradient(160deg,#0d1e3a,#162848);
+  padding:16px 16px 90px;overflow-y:auto;justify-content:flex-start;align-items:stretch;
+}
+#s-reasons::-webkit-scrollbar{display:none;}
+.rlist{width:100%;max-width:620px;margin:0 auto;}
+.ritem{
+  display:flex;align-items:flex-start;gap:14px;
+  background:rgba(255,255,255,.06);border-radius:16px;padding:16px 18px;margin-bottom:12px;
+  border-left:4px solid var(--blue);
+}
+.rnum{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--softblue);font-weight:700;flex-shrink:0;width:34px;}
+.rtxt{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(.8rem,2.7vw,.93rem);color:rgba(255,255,255,.85);line-height:1.8;}
+.endnote{font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--softblue);text-align:center;margin-top:18px;margin-bottom:8px;}
+
+/* ════════════════════
+   LETTER
+════════════════════ */
+#s-letter{
+  background:linear-gradient(145deg,#0a1628,#162848);
+  padding:20px 18px 90px;overflow-y:auto;justify-content:flex-start;
+}
+#s-letter::-webkit-scrollbar{display:none;}
+.env{
+  background:rgba(255,255,255,.06);backdrop-filter:blur(10px);
+  border-radius:24px;padding:42px 24px 32px;
+  box-shadow:0 16px 60px rgba(58,107,201,.2);
+  border:1.5px solid rgba(168,196,240,.2);
+  position:relative;max-width:620px;width:100%;margin:28px auto 0;
+}
+.seal{position:absolute;top:-26px;left:50%;transform:translateX(-50%);font-size:2.8rem;animation:pulse 2s ease-in-out infinite;}
+.greet{font-family:'Dancing Script',cursive;font-size:1.55rem;color:var(--softblue);margin-bottom:18px;}
+.env p{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(.82rem,2.7vw,.95rem);line-height:2;color:rgba(255,255,255,.85);margin-bottom:14px;}
+.signoff{font-family:'Dancing Script',cursive;font-size:1.2rem;color:var(--softblue);text-align:right;margin-top:20px;}
+.krow{font-size:1.6rem;margin-top:20px;letter-spacing:8px;animation:bounce 1.5s ease-in-out infinite;text-align:center;}
+
+/* ════════════════════
+   PROMISES
+════════════════════ */
+#s-promises{
+  background:linear-gradient(155deg,#0d1e3a,#1a3460);
+  padding:16px 16px 90px;overflow-y:auto;justify-content:flex-start;align-items:stretch;
+}
+#s-promises::-webkit-scrollbar{display:none;}
+.prom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(138px,1fr));gap:12px;max-width:660px;width:100%;margin:0 auto;}
+.pcard{
+  background:rgba(255,255,255,.07);border-radius:18px;padding:20px 14px;text-align:center;
+  border:1px solid rgba(168,196,240,.15);position:relative;overflow:hidden;
+}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--softblue),var(--blue),var(--gold));}
+.pcard .ico{font-size:2rem;display:block;margin-bottom:10px;}
+.pcard h3{font-family:'Playfair Display',serif;font-size:.88rem;color:var(--softblue);margin-bottom:7px;}
+.pcard p{font-size:.74rem;line-height:1.75;color:rgba(255,255,255,.75);}
+
+/* ════════════════════
+   WHY YOU MATTER
+════════════════════ */
+#s-memories{
+  background:linear-gradient(155deg,#0a1628,#162040);
+  padding:16px 16px 90px;overflow-y:auto;justify-content:flex-start;align-items:stretch;
+}
+#s-memories::-webkit-scrollbar{display:none;}
+.mem-list{width:100%;max-width:620px;margin:0 auto;}
+.mcard{
+  background:rgba(255,255,255,.06);border-radius:18px;padding:18px 18px;margin-bottom:13px;
+  border:1px solid rgba(168,196,240,.12);display:flex;gap:13px;align-items:flex-start;
+}
+.mcard .mico{font-size:1.9rem;flex-shrink:0;}
+.mcard-body h3{font-family:'Playfair Display',serif;font-size:.93rem;color:var(--softblue);margin-bottom:6px;}
+.mcard-body p{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(.78rem,2.6vw,.9rem);color:rgba(255,255,255,.8);line-height:1.8;}
+
+/* SHARED */
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,5vw,2.2rem);color:#fff;text-align:center;margin-bottom:4px;margin-top:10px;}
+.sec-sub{font-family:'Dancing Script',cursive;font-size:clamp(.92rem,3.4vw,1.18rem);color:var(--softblue);text-align:center;margin-bottom:16px;}
+
+/* KEYFRAMES */
+@keyframes pulse    {0%,100%{transform:scale(1);}50%{transform:scale(1.18);}}
+@keyframes heartbeat{0%,100%{transform:scale(1);}14%{transform:scale(1.38);}28%{transform:scale(1);}42%{transform:scale(1.38);}}
+@keyframes sway     {0%,100%{transform:rotate(-4deg);}50%{transform:rotate(4deg);}}
+@keyframes bounce   {0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@keyframes glowBlue {0%,100%{box-shadow:0 8px 30px rgba(58,107,201,.5);}50%{box-shadow:0 8px 50px rgba(58,107,201,.9),0 0 24px rgba(168,196,240,.5);}}
+@keyframes fadeIn   {from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" loop preload="auto"><source src="song.mp3" type="audio/mpeg"></audio>
+<button id="musicBtn" onclick="toggleMusic()">🎵</button>
+<div id="particleLayer"></div>
+
+<!-- HOME -->
+<div class="screen active" id="s-home">
+  <div id="starHome"></div>
+  <div class="home-inner">
+    <div class="h-sorry">💙 A message straight from the heart of 💙</div>
+    <div class="h-name">Jaskirat<br><span>Singh</span></div>
+    <div class="h-from">— meant only for Harmandeep</div>
+    <span class="h-icon">🙏</span>
+    <p class="h-tag">"The hardest words to say are sometimes the most important ones. And I mean every single one."</p>
+    <button class="btn-enter" onclick="goScreen('s-sorry','nb-sorry')">Open My Heart 💙</button>
+    <div class="float-row">💙 🙏 💙 🙏 💙</div>
+  </div>
+</div>
+
+<!-- SORRY -->
+<div class="screen" id="s-sorry">
+  <div id="starLayer"></div>
+  <div class="sorry-inner">
+    <span class="big-sorry">🙏</span>
+    <div class="sorry-title">I Am So Sorry,<br><span>Harmandeep</span></div>
+    <p class="sorry-text">
+      I hurt you, and there is no excuse good enough for that.
+      You deserved better from me — better words, better actions,
+      better choices. I was wrong, and I own that completely.
+      You are the most important person in my world and the thought
+      of you hurting because of me breaks my heart every single moment.
+      <br><br>
+      I am not asking you to forget. I am just asking for a chance
+      to show you I can do better — because you deserve the very best of me.
+    </p>
+    <span class="forgive-q">Will you forgive me? 🥺</span>
+    <div class="btn-arena" id="btnArena">
+      <button class="btn-forgive" onclick="sayForgiven()">💙 Yes, I Forgive You</button>
+      <button class="btn-notyet" id="noBtn" onmouseover="runNo()" ontouchstart="runNo()" onclick="runNo()">Not Yet 😔</button>
+    </div>
+    <div id="forgivenMsg">
+      <span class="forg-icon">💙</span>
+      <div class="forg-line">Thank You, Harmandeep 🙏</div>
+      <div class="forg-sub">
+        I promise to never give you a reason to doubt me again.<br>
+        You are my everything and I will spend every day proving it.<br><br>
+        — Jaskirat Singh 💙
+      </div>
+      <div class="forg-conf">🌸 💙 🙏 💙 🌸</div>
+    </div>
+  </div>
+</div>
+
+<!-- REGRETS -->
+<div class="screen" id="s-reasons">
+  <div class="sec-title">What I Should Have Done</div>
+  <div class="sec-sub">Mistakes I regret and own fully 🙏</div>
+  <div class="rlist">
+    <div class="ritem"><div class="rnum">01</div><div class="rtxt">I should have listened more and spoken less. You deserved to be heard every single time.</div></div>
+    <div class="ritem"><div class="rnum">02</div><div class="rtxt">I should have chosen my words more carefully. Words once said cannot be taken back, and I know that now more than ever.</div></div>
+    <div class="ritem"><div class="rnum">03</div><div class="rtxt">I should have put your feelings above my ego. My pride cost us both something precious and I am deeply ashamed of that.</div></div>
+    <div class="ritem"><div class="rnum">04</div><div class="rtxt">I should have been more patient. You never deserved my frustration — you only ever deserved my kindness.</div></div>
+    <div class="ritem"><div class="rnum">05</div><div class="rtxt">I should have been present when you needed me most. I was not, and I will regret that every day until I make it right.</div></div>
+    <div class="ritem"><div class="rnum">06</div><div class="rtxt">I should have shown you how much you mean to me every day — not just in words but in actions that actually prove it.</div></div>
+    <div class="ritem"><div class="rnum">07</div><div class="rtxt">I should have trusted you more. You have always been honest with me and you deserved the same trust in return.</div></div>
+    <div class="ritem"><div class="rnum">08</div><div class="rtxt">I should have apologised sooner instead of letting silence grow between us. Every moment without fixing this was a moment wasted.</div></div>
+  </div>
+  <div class="endnote">💙 I see every mistake. I own every one. 💙</div>
+</div>
+
+<!-- LETTER -->
+<div class="screen" id="s-letter">
+  <div class="sec-title" style="margin-top:18px;">From My Heart</div>
+  <div class="env">
+    <div class="seal">💌</div>
+    <div class="greet">My Dearest Harmandeep,</div>
+    <p>I have written and deleted this a hundred times because nothing feels adequate. But here is the truth — plain and honest — the way you deserve it.</p>
+    <p>I hurt you. I did not mean to, but that does not undo the pain, and I know that. I am not here to make excuses. I am here because losing your trust and your smile is the worst thing I have ever felt.</p>
+    <p>You are not just my girlfriend. You are the person I want to be better for. The person whose laugh I would give anything to hear again, without the shadow of what I did hanging between us.</p>
+    <p>I know sorry is just a word unless it is followed by change. So this is not just sorry — this is a promise. A promise to listen harder, speak kinder, and never make you feel anything less than the most important person in my world.</p>
+    <p>Please know that no matter what you decide, my respect for you never wavers. But if you give me another chance, I will spend every single day making sure you never regret it.</p>
+    <div class="signoff">With all my heart and all my regret,<br>Jaskirat Singh 💙🙏</div>
+  </div>
+  <div class="krow">💙 💙 💙 💙 💙</div>
+</div>
+
+<!-- PROMISES -->
+<div class="screen" id="s-promises">
+  <div class="sec-title">My Promises To You</div>
+  <div class="sec-sub">Not just words — a real commitment 💙</div>
+  <div class="prom-grid">
+    <div class="pcard"><span class="ico">👂</span><h3>I Will Listen</h3><p>Really listen — not to reply, but to understand everything you feel.</p></div>
+    <div class="pcard"><span class="ico">🤝</span><h3>I Will Be Honest</h3><p>No more silence, no avoidance. Complete honesty, always.</p></div>
+    <div class="pcard"><span class="ico">🛡️</span><h3>I Will Protect You</h3><p>Protect your heart, your feelings, your trust — every single day.</p></div>
+    <div class="pcard"><span class="ico">⏰</span><h3>I Will Be Present</h3><p>Fully here when you need me — mind, heart and attention.</p></div>
+    <div class="pcard"><span class="ico">💬</span><h3>I Will Communicate</h3><p>Talk through problems and never let silence become a wall between us.</p></div>
+    <div class="pcard"><span class="ico">🌱</span><h3>I Will Grow</h3><p>Become the person you deserve — every day better than the last.</p></div>
+    <div class="pcard"><span class="ico">💙</span><h3>I Will Show Up</h3><p>In every small moment and every hard one — I will always be there.</p></div>
+    <div class="pcard"><span class="ico">🙏</span><h3>I Will Never Forget</h3><p>Never forget how much you matter and how much I nearly lost.</p></div>
+  </div>
+</div>
+
+<!-- WHY YOU MATTER -->
+<div class="screen" id="s-memories">
+  <div class="sec-title">Why You Mean Everything</div>
+  <div class="sec-sub">The reasons I cannot let you go 💙</div>
+  <div class="mem-list">
+    <div class="mcard"><span class="mico">😊</span><div class="mcard-body"><h3>Your Smile</h3><p>The smile you give when you are truly happy is the most beautiful thing in my world. I want to be the reason for it, not the reason it fades.</p></div></div>
+    <div class="mcard"><span class="mico">💬</span><div class="mcard-body"><h3>The Way You Talk To Me</h3><p>Even when you are upset, there is so much love in the way you speak. I never want to take that for granted again.</p></div></div>
+    <div class="mcard"><span class="mico">🤗</span><div class="mcard-body"><h3>Your Warmth</h3><p>You make everyone around you feel safe and loved. I am so lucky to be one of those people — and I was foolish to risk that.</p></div></div>
+    <div class="mcard"><span class="mico">💪</span><div class="mcard-body"><h3>Your Strength</h3><p>You handle things with a quiet strength that amazes me. Even now, facing this, you are so much stronger than I deserved.</p></div></div>
+    <div class="mcard"><span class="mico">🌙</span><div class="mcard-body"><h3>The Quiet Moments</h3><p>The simple moments with you mean more than anything. I miss them. I want them back. I want us back.</p></div></div>
+    <div class="mcard"><span class="mico">💙</span><div class="mcard-body"><h3>You, Just You</h3><p>Not a distant version of you — just you, as you are, close again. That is all I want. That is everything.</p></div></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div id="nav">
+  <button class="nav-btn on" id="nb-home"     onclick="goScreen('s-home','nb-home')"><span class="ni">🏠</span>Home</button>
+  <button class="nav-btn"    id="nb-sorry"    onclick="goScreen('s-sorry','nb-sorry')"><span class="ni">🙏</span>Sorry</button>
+  <button class="nav-btn"    id="nb-reasons"  onclick="goScreen('s-reasons','nb-reasons')"><span class="ni">💔</span>Regrets</button>
+  <button class="nav-btn"    id="nb-letter"   onclick="goScreen('s-letter','nb-letter')"><span class="ni">💌</span>Letter</button>
+  <button class="nav-btn"    id="nb-promises" onclick="goScreen('s-promises','nb-promises')"><span class="ni">🤝</span>Promises</button>
+  <button class="nav-btn"    id="nb-memories" onclick="goScreen('s-memories','nb-memories')"><span class="ni">💙</span>Why You</button>
+</div>
+
+<script>
+/* NAVIGATION */
+function goScreen(sid, nid) {
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('on'); });
+  var sc = document.getElementById(sid);
+  if (sc) { sc.classList.add('active'); sc.scrollTop = 0; }
+  var nb = document.getElementById(nid);
+  if (nb) nb.classList.add('on');
+}
+
+/* ENTER BUTTON — belt-and-braces for mobile */
+document.addEventListener('DOMContentLoaded', function() {
+  var enterBtn = document.querySelector('.btn-enter');
+  if (enterBtn) {
+    enterBtn.addEventListener('click',      function(e){ e.stopPropagation(); goScreen('s-sorry','nb-sorry'); });
+    enterBtn.addEventListener('touchend',   function(e){ e.preventDefault(); e.stopPropagation(); goScreen('s-sorry','nb-sorry'); });
+  }
+  /* also wire every nav button with touchend for mobile */
+  document.querySelectorAll('.nav-btn').forEach(function(btn) {
+    btn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      btn.click();
+    });
+  });
+});
+
+/* STARS */
+function makeStars(id, n) {
+  var c = document.getElementById(id);
+  if (!c) return;
+  c.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;';
+  for (var i = 0; i < n; i++) {
+    var d = document.createElement('div');
+    d.className = 'star';
+    var sz = (1 + Math.random() * 2) + 'px';
+    d.style.cssText = 'width:'+sz+';height:'+sz+';left:'+(Math.random()*100)+'%;top:'+(Math.random()*100)+'%;animation-delay:'+(Math.random()*3)+'s;animation-duration:'+(1.5+Math.random()*2)+'s;';
+    c.appendChild(d);
+  }
+}
+makeStars('starLayer', 90);
+makeStars('starHome',  55);
+
+/* FLOATING PARTICLES */
+var EMO = ['💙','🙏','💔','✨','🌸','💫','🌟','💧','🕊️','💎'];
+function spawnP() {
+  var el = document.createElement('div');
+  el.className = 'pf';
+  el.textContent = EMO[Math.floor(Math.random() * EMO.length)];
+  el.style.left = (Math.random() * 98) + '%';
+  el.style.fontSize = (0.8 + Math.random() * 1.1) + 'rem';
+  var dur = 9 + Math.random() * 10;
+  el.style.animationDuration = dur + 's';
+  document.getElementById('particleLayer').appendChild(el);
+  setTimeout(function() { el.remove(); }, dur * 1000);
+}
+for (var i = 0; i < 16; i++) { (function(i){ setTimeout(spawnP, i * 550); })(i); }
+setInterval(spawnP, 1200);
+
+/* MUSIC */
+var music = document.getElementById('bgMusic');
+var musicBtn = document.getElementById('musicBtn');
+var playing = false;
+music.volume = 0.4;
+music.play().then(function(){ playing = true; musicBtn.textContent = '🎵'; }).catch(function(){ playing = false; musicBtn.textContent = '▶️'; });
+function startOnTouch() {
+  if (!playing) { music.play().then(function(){ playing = true; musicBtn.textContent = '🎵'; musicBtn.classList.remove('muted'); }).catch(function(){}); }
+}
+document.addEventListener('touchstart', startOnTouch, { once: true });
+document.addEventListener('click', startOnTouch, { once: true });
+function toggleMusic() {
+  if (playing) { music.pause(); playing = false; musicBtn.textContent = '🔇'; musicBtn.classList.add('muted'); }
+  else { music.play(); playing = true; musicBtn.textContent = '🎵'; musicBtn.classList.remove('muted'); }
+}
+
+/* NOT YET — RUNS AWAY */
+var noBtn = document.getElementById('noBtn');
+var arena = document.getElementById('btnArena');
+var rc = 0;
+function runNo() {
+  rc++;
+  var aW = arena.offsetWidth, aH = arena.offsetHeight;
+  var bW = noBtn.offsetWidth,  bH = noBtn.offsetHeight;
+  noBtn.style.right = 'auto'; noBtn.style.bottom = 'auto';
+  noBtn.style.left = (Math.random() * Math.max(0, aW - bW)) + 'px';
+  noBtn.style.top  = (Math.random() * Math.max(0, aH - bH)) + 'px';
+  noBtn.style.transform = 'scale(' + Math.max(0.5, 1 - rc * 0.05) + ')';
+  noBtn.style.opacity = '' + Math.max(0.12, 1 - rc * 0.08);
+}
+
+/* FORGIVEN */
+function sayForgiven() {
+  document.getElementById('btnArena').style.display = 'none';
+  var q = document.querySelector('.forgive-q');
+  if (q) q.style.display = 'none';
+  document.getElementById('forgivenMsg').style.display = 'block';
+  var B = ['💙','✨','🙏','🌸','💫','🕊️','💎','🌟','💙','✨'];
+  for (var i = 0; i < 22; i++) {
+    (function(i){ setTimeout(function(){
+      var el = document.createElement('div');
+      el.style.cssText = 'position:fixed;z-index:99999;pointer-events:none;font-size:'+(1.2+Math.random()*2)+'rem;left:'+(Math.random()*100)+'%;top:'+(10+Math.random()*80)+'%;transition:opacity 1.6s ease,transform 1.6s ease;opacity:1;';
+      el.textContent = B[Math.floor(Math.random() * B.length)];
+      document.body.appendChild(el);
+      setTimeout(function(){ el.style.opacity='0'; el.style.transform='translateY(-90px) scale(.4)'; }, 80);
+      setTimeout(function(){ el.remove(); }, 1900);
+    }, i * 100); })(i);
+  }
+}
+</script>
+</body>
+</html>
